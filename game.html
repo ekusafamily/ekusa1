@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archery Game</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #87CEEB;
+        }
+
+        canvas {
+            display: block;
+            background-color: #fff;
+            border: 1px solid black;
+            margin: 0 auto;
+            background: linear-gradient(#87CEEB 70%, #228B22 30%);
+        }
+
+        #target {
+            position: absolute;
+            bottom: 100px;
+            right: 50px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #fff 30%, red 30%, red 60%, blue 60%);
+        }
+    </style>
+</head>
+<body>
+<canvas id="archeryGame" width="800" height="600"></canvas>
+<div id="target"></div>
+
+<script>
+    const canvas = document.getElementById("archeryGame");
+    const ctx = canvas.getContext("2d");
+    const target = document.getElementById("target");
+
+    let isDragging = false;
+    let arrowReleased = false;
+
+    // Arrow properties
+    let arrow = {
+        x: 150,
+        y: canvas.height - 100,
+        width: 50,
+        height: 5,
+        angle: 0,
+        velocity: { x: 0, y: 0 },
+        gravity: 0.2
+    };
+
+    // Bow string properties
+    let bowString = {
+        baseX: 150,
+        baseY: canvas.height - 100,
+        pullX: 150,
+        pullY: canvas.height - 100,
+        maxPull: 100
+    };
+
+    // Target properties
+    const targetRect = target.getBoundingClientRect();
+    const targetCenter = {
+        x: targetRect.x + targetRect.width / 2,
+        y: targetRect.y + targetRect.height / 2
+    };
+
+    canvas.addEventListener("mousedown", startDrag);
+    canvas.addEventListener("mousemove", dragString);
+    canvas.addEventListener("mouseup", releaseArrow);
+
+    function startDrag(event) {
+        const { offsetX, offsetY } = event;
+        const dist = Math.sqrt(Math.pow(offsetX - bowString.baseX, 2) + Math.pow(offsetY - bowString.baseY, 2));
+        if (dist < bowString.maxPull) {
+            isDragging = true;
+        }
+    }
+
+    function dragString(event) {
+        if (!isDragging || arrowReleased) return;
+
+        const { offsetX, offsetY } = event;
+        const dx = offsetX - bowString.baseX;
+        const dy = offsetY - bowString.baseY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist <= bowString.maxPull) {
+            bowString.pullX = offsetX;
+            bowString.pullY = offsetY;
+        } else {
+            const angle = Math.atan2(dy, dx);
+            bowString.pullX = bowString.baseX + Math.cos(angle) * bowString.maxPull;
+            bowString.pullY = bowString.baseY + Math.sin(angle) * bowString.maxPull;
+        }
+    }
+
+    function releaseArrow() {
+        if (!isDragging) return;
+        isDragging = false;
+        arrowReleased = true;
+
+        const pullDistance = Math.sqrt(
+            Math.pow(bowString.pullX - bowString.baseX, 2) +
+            Math.pow(bowString.pullY - bowString.baseY, 2)
+        );
+        const angle = Math.atan2(bowString.pullY - bowString.baseY, bowString.pullX - bowString.baseX);
+
+        arrow.velocity.x = -(pullDistance / bowString.maxPull) * Math.cos(angle) * 15;
+        arrow.velocity.y = -(pullDistance / bowString.maxPull) * Math.sin(angle) * 15;
+    }
+
+    function resetArrow() {
+        arrow.x = bowString.baseX;
+        arrow.y = bowString.baseY;
+        arrow.velocity.x = 0;
+        arrow.velocity.y = 0;
+        arrowReleased = false;
+        bowString.pullX = bowString.baseX;
+        bowString.pullY = bowString.baseY;
+    }
+
+    function drawArrow() {
+        ctx.save();
+        ctx.translate(arrow.x, arrow.y);
+        ctx.rotate(arrow.angle);
+        ctx.fillStyle = "brown";
+        ctx.fillRect(-arrow.width / 2, -arrow.height / 2, arrow.width, arrow.height);
+        ctx.fillStyle = "grey";
+        ctx.fillRect(arrow.width / 2, -arrow.height / 2, 10, arrow.height);
+        ctx.restore();
+    }
+
+    function drawBowString() {
+        ctx.beginPath();
+        ctx.moveTo(bowString.baseX, bowString.baseY);
+        ctx.lineTo(bowString.pullX, bowString.pullY);
+        ctx.strokeStyle = "#000";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+    }
+
+    function updateArrow() {
+        if (!arrowReleased) return;
+
+        arrow.velocity.y += arrow.gravity;
+        arrow.x += arrow.velocity.x;
+        arrow.y += arrow.velocity.y;
+        arrow.angle = Math.atan2(arrow.velocity.y, arrow.velocity.x);
+
+        // Collision with ground
+        if (arrow.y > canvas.height) {
+            resetArrow();
+        }
+
+        // Collision with target
+        if (arrow.x > targetCenter.x - 50 && arrow.x < targetCenter.x + 50 &&
+            arrow.y > targetCenter.y - 50 && arrow.y < targetCenter.y + 50) {
+            alert("You hit the target!");
+            resetArrow();
+        }
+    }
+
+    function gameLoop() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        drawBowString();
+        drawArrow();
+        updateArrow();
+
+        requestAnimationFrame(gameLoop);
+    }
+
+    gameLoop();
+</script>
+</body>
+</html>

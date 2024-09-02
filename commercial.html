@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commercials</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+	text-align: center;
+}
+
+header {
+    background-color: #0044cc;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+header .logo img {
+    width: 100px;
+}
+
+nav {
+    background-color: #333;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+}
+
+nav ul li {
+    margin: 0 1rem;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem;
+    display: block;
+}
+
+nav ul li a:hover {
+    background-color: #555;
+}
+
+main {
+    padding: 2rem;
+}
+
+main section {
+    margin-bottom: 2rem;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+    border-radius: 10px;
+    width: 100%;
+    bottom: 0;
+}
+
+j {
+    color: violet;
+    font-size: 40px;
+}
+
+.email-button {
+    position: fixed;
+    bottom: 20px;
+    right: 100px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 15px 15px;
+    font-size: 16px;
+    text-align: center;
+    display: inline-block;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.app-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 15px 15px;
+    font-size: 16px;
+    text-align: center;
+    display: inline-block;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.floating-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-30px);
+}
+
+img {
+    width: 25px;
+}
+
+.neg {
+    padding: 50px;
+    border-left: 5px solid red;
+}
+
+.slideshow-container {
+    width: 40%;
+    max-width: 100px;
+    position: relative;
+}
+
+#slideshow-image {
+    width: 40%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    transition: opacity 1s ease;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="logo.jpg" alt="EKUSA Family Logo">
+        </div>
+        <h1>MIGHTY EKUSA FAMILY</h1>
+        <h5>Growing into Greatness as a Team</h5>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="https://linkr.bio/EKUSA_Family" target="_blank">Social Media</a></li>
+            <li><a href="news.html">News</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h1>EKUSA Utensils lease</h1>
+        <div class="show">
+            <img id="slideshow-image" src="image1.jpg" alt="utensils">
+        </div>
+        <h5><del>@500.00Ksh</del></h5>
+        <j>@300ksh Free delivery around DEKUT</j>
+        <h2>Description</h2>
+        <p>Want to hold a party but you don't have the necessary utensils? Look no further. Don't worry anymore because we are here to help you. Hold your party, don't cancel it. We lease utensils around DEKUT at an affordable price. Feel free to negotiate the price. You can rest assured that the utensils are new, clean, and all types are available.</p>
+        <div class="neg">
+            <p>Email us or contact us on the buttons below to get in touch with us and we will attend to you accordingly.</p>
+        </div>
+        <a href="mailto:ekusafamily@gmail.com" class="email-button">
+            <img src="https://img.icons8.com/?size=100&id=X0mEIh0RyDdL&format=png&color=000000" alt="Email Icon">
+        </a>
+        <a href="https://wa.me/qr/MOJFPB7ZA3IUP1" class="app-button">
+            <img src="https://img.icons8.com/?size=100&id=16733&format=png&color=000000" alt="WhatsApp Icon">
+        </a>
+        <script>
+            const images = [
+                "utensils1.jpg",
+                "utensils2.jpg",
+                "utensils3.jpg"
+            ];
+
+            let currentIndex = 0;
+            const slideshowImage = document.getElementById('slideshow-image');
+
+            function changeImageRandomly() {
+                let randomIndex;
+                do {
+                    randomIndex = Math.floor(Math.random() * images.length);
+                } while (randomIndex === currentIndex);
+
+                currentIndex = randomIndex;
+                slideshowImage.style.opacity = 0; // Fade out
+                setTimeout(() => {
+                    slideshowImage.src = images[currentIndex];
+                    slideshowImage.style.opacity = 1; // Fade in
+                }, 1000);
+            }
+
+            // Change image every 3 seconds
+            setInterval(changeImageRandomly, 3000);
+        </script>
+    </main>
+    <footer>
+        <p>&copy; 2024 EKUSA Family. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EKUSA News</title>
+    <style>
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(to right, brown, green);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+}
+
+header {
+    background-color: #0044cc;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+header .logo img {
+    width: 100px;
+}
+
+nav {
+    background-color: #333;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+}
+
+nav ul li {
+    margin: 0 1rem;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem;
+    display: block;
+}
+
+nav ul li a:hover {
+    background-color: #555;
+}
+
+main {
+    padding: 2rem;
+    flex: 1;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+    border-radius: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.slideshow-container {
+    position: relative;
+    max-width: 100%;
+    width: 100%;
+    margin: auto;
+    box-sizing: border-box;
+}
+
+.mySlides {
+    display: none;
+    position: relative;
+}
+
+.mySlides img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+@keyframes fade {
+    from {opacity: .4} 
+    to {opacity: 1}
+}
+
+.watermark {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="logo.jpg" alt="EKUSA Family Logo">
+        </div>
+        <h1>MIGHTY EKUSA FAMILY</h1>
+        <h5>Growing into Greatness as a Team</h5>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="commercial.html">Commercials</a></li>
+            <li><a href="https://linkr.bio/EKUSA_Family" target="_blank">Social Media</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+        </ul>
+    </nav>
+    <main>
+        <div class="slideshow-container">
+            <div class="mySlides fade">
+                <img src="1.jpg" alt="Members">
+            </div>
+            <div class="mySlides fade">
+                <img src="2.jpg" alt="Members">
+            </div>
+            <div class="mySlides fade">
+                <img src="3.jpg" alt="Members 3">
+            </div>
+            <div class="mySlides fade">
+                <img src="4.jpg" alt="Image 4">
+            </div>
+            <div class="mySlides fade">
+                <img src="5.jpg" alt="Image 5">
+            </div>
+            <div class="mySlides fade">
+                <img src="6.jpg" alt="Image 6">
+            </div>
+            <div class="mySlides fade">
+                <img src="7.jpg" alt="Image 7">
+            </div>
+            <div class="mySlides fade">
+                <img src="leaders.jpg" alt="Leaders">
+                <div class="watermark">Our current Ekusa leaders</div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 EKUSA Family. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+            let slides = document.getElementsByClassName("mySlides");
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}    
+            slides[slideIndex-1].style.display = "block";  
+            setTimeout(showSlides, 4000); // Change image every 4 seconds
+        }
+    </script>
+</body>
+</html>
